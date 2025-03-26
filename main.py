@@ -15,12 +15,12 @@ ground = Actor('ground', (WIDTH/5, HEIGHT/2 + 5))
 initial_pos = (WIDTH/5, HEIGHT/2 - 10)
 player = Actor('player', )
 player.pos = initial_pos
-player.x_speed = 5
-player.y_speed = 5
+player.x_speed = 6
+player.y_speed = 6
 player.jump_force = 6
 
-gravity = 1
-terminal_speed = 10
+gravity = 0.6
+terminal_speed = 12
 
 def reset():
     player.pos = initial_pos
@@ -38,16 +38,54 @@ def move_player():
     if player.y_speed < terminal_speed:
         player.y_speed += gravity
         
-    if player.colliderect(ground):
+    if collide_x():
         player.x_speed = 0
+        
+    if collide_y():
         player.y_speed = 0
-
-    if player.colliderect(ground) and keyboard.space:
+        if collide_down and keyboard.space:
             player.y_speed -= player.jump_force
 
     player.y += player.y_speed
 
     return False
+
+
+def collide_y():
+    return (player.x + player.width >= ground.x
+        and player.x < ground.x + ground.width
+        and collide_up()
+        and collide_down()
+    )
+
+
+def collide_x():
+    return (player.y - player.height <= ground.y
+        and player.y > ground.y + ground.height
+        and collide_right()
+        and collide_left()
+    )
+
+
+def collide_up():
+    return player.y <= ground.y
+
+
+def collide_right():
+    return player.x >= ground.x
+
+
+def collide_down():
+    return player.y >= ground.y - ground.height
+
+
+def collide_left():
+    return player.x <= ground.x + ground.width
+
+
+def on_collide_x(): 
+    return False
+
 
 def on_mouse_down(button):
     if button == 1:
