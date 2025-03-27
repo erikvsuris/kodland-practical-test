@@ -23,7 +23,7 @@ PLATFORMS = [
 ]
 
 PLAYER = Actor('player')
-START_POSITION = (WIDTH/4, HEIGHT-TILE_SIZE*4)
+START_POSITION = (WIDTH/4, HEIGHT/2-TILE_SIZE/2)
 PLAYER.pos = START_POSITION
 PLAYER.x_speed = 0
 PLAYER.y_speed = 0
@@ -48,6 +48,13 @@ def update(dt):
 
     if keyboard.escape:
         exit()
+        
+    print(PLAYER.y, PLATFORM_1.y)
+
+
+def on_mouse_down(button):
+    if button == 1:
+        print("SHOT", button, "clicked")
 
 
 def move_player():
@@ -75,9 +82,10 @@ def move_player():
 def collide_y():
     """ Verifica se o jogador colidiu com uma plataforma no eixo Y """
     for platform in PLATFORMS:
-        if (PLAYER.x + PLAYER.width > platform.x
+        if (PLAYER.colliderect(platform)
+            and PLAYER.x + PLAYER.width > platform.x
             and PLAYER.x < platform.x + platform.width):
-            if PLAYER.y + PLAYER.height >= platform.y and PLAYER.y + PLAYER.height <= platform.y + 10:
+            if PLAYER.y + PLAYER.height >= platform.y and PLAYER.y + PLAYER.height <= platform.y + TILE_SIZE/2:
                 return True
     return False
 
