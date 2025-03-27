@@ -11,9 +11,10 @@ WIDTH = 1280
 HEIGHT = 720
 
 ground = Actor('ground', (WIDTH/5, HEIGHT/2 + 5))
+# ground = Rect((WIDTH/5, HEIGHT/2 + 5), (300, 50))
 
 initial_pos = (WIDTH/5, HEIGHT/2 - 10)
-player = Actor('player', )
+player = Actor('player')
 player.pos = initial_pos
 player.x_speed = 6
 player.y_speed = 6
@@ -30,6 +31,13 @@ def update(dt):
         reset()
         
     move_player()
+    animate_player()
+
+
+def on_mouse_down(button):
+    if button == 1:
+        print("SHOT", button, "clicked")
+
 
 def move_player():
     movement_direction = keyboard.d - keyboard.a
@@ -87,14 +95,13 @@ def on_collide_x():
     return False
 
 
-def on_mouse_down(button):
-    if button == 1:
-        print("SHOT", button, "clicked")
+def animate_player():
+    if player.x_speed:l
+        player.sprite()
 
 def draw():
     screen.clear()
     screen.fill((25, 25, 25))
     player.draw()
     ground.draw()
-    
-    
+    # screen.draw.rect(ground, (250, 80, 80))  
