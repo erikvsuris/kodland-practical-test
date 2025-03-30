@@ -394,14 +394,15 @@ def on_mouse_down(pos, button):
 
 def draw():
     screen.clear()
-    if game_state == "menu":
-        draw_menu()
-    elif game_state == "playing":
-        draw_game()
-    elif game_state == "win":
-        draw_win()
-    elif game_state == "over":
-        draw_over()
+    match(game_state):
+        case "menu":
+            draw_menu()
+        case "playing":
+            draw_game()
+        case "win":
+            draw_win()
+        case "over":
+            draw_over()
 
 def draw_menu():
     screen.fill((25, 25, 25))
